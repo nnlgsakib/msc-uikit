@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { CogIcon } from "../../../components/Svg";
 import IconButton from "../../../components/Button/IconButton";
@@ -39,11 +39,35 @@ const PanelFooter: React.FC<Props> = ({
   pushNav,
   toggleTheme,
   isDark,
-  cakePriceUsd,
   currentLang,
   langs,
   setLang,
 }) => {
+  const [cakePriceUsd, setCakePriceUsd] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPrice = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/price');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setCakePriceUsd(data.price);
+        // eslint-disable-next-line no-console
+        console.log('Fetched price:', data.price);
+      } catch (fetchError: any) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to fetch price:', fetchError);
+      }
+    };
+
+    fetchPrice(); // Initial fetch
+    const intervalId = setInterval(fetchPrice, 5000); // Fetch every 5 seconds
+
+    return () => clearInterval(intervalId); // Clean up the interval on component unmount
+  }, []);
+
   if (!isPushed) {
     return (
       <Container>
