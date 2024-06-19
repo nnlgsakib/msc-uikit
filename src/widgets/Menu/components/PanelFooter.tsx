@@ -48,7 +48,7 @@ const PanelFooter: React.FC<Props> = ({
   useEffect(() => {
     const fetchPrice = async () => {
       try {
-        const response = await fetch('http://localhost:3001/price');
+        const response = await fetch('https://mscswap-api.vercel.app/price');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
