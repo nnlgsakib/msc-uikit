@@ -1,6 +1,6 @@
 {
   "name": "msc-uikit",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Set of UI components for msc projects",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
